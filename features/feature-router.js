@@ -21,7 +21,10 @@
   // Add or remove filenames here to toggle features in the main project.
   // --------------------------------------------------------------------------
   const ACTIVE_FEATURE_ROUTES = [
-    // 1. Password Visibility Toggle (Show / Hide password icon)
+    // Email Field Placeholder: Sets placeholder to '@lnmiit.ac.in'
+    // 'email-placeholder-lnmiit.js',
+
+   // // 1. Password Visibility Toggle (Show / Hide password icon)
     // 'password-show-hide-toggle.js',
 
     // 2. Dark / Light Theme Switcher
@@ -30,7 +33,7 @@
     // 3. Reset Password on Login Page
     // 'login-reset-password.js',
 
-    // 4. Character limits for individual text fields (separate file per field)
+   // // 4. Character limits for individual text fields (separate file per field)
     // 'text-limit-user-name.js',            // Max 50 chars: User Name (Profile, User Management)
     // 'text-limit-user-email.js',           // Max 80 chars: User Email Address (Login, Create User, Reset Password)
     // 'text-limit-user-password.js',        // Max 64 chars: Password (Default limit for Login, Create User, Reset)

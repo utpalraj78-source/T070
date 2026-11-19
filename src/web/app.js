@@ -38,7 +38,7 @@ async function api(path, method = "GET", body) {
   let data = null;
   try {
     data = await r.json();
-  } catch {}
+  } catch { }
   if (!r.ok) {
     if (r.status === 401 && path != "/auth/login") {
       S.token = null;
@@ -121,7 +121,7 @@ function nav() {
 async function logout() {
   try {
     await api("/auth/logout", "POST");
-  } catch {}
+  } catch { }
   sessionStorage.removeItem("hsts_token");
   S.token = null;
   S.user = null;
@@ -130,7 +130,7 @@ async function logout() {
 function renderLogin() {
   nav();
   $("#main").innerHTML =
-    `<section class="card login"><h1>Sign in</h1><p class="sub"></p><form id="login"><label for="email">Email (@lnmiit.ac.in) *</label><input id="email" name="email" type="email" placeholder="e.g. 24ucs144@lnmiit.ac.in" required autocomplete="username"><label for="password">Password *</label><input id="password" name="password" type="password" required autocomplete="current-password"><div class="actions"><button>Sign in</button></div></form><p class="muted"></p></section>`;
+    `<section class="card login"><h1>Sign in</h1><p class="sub"></p><form id="login"><label for="email">Email (@lnmiit.ac.in) *</label><input id="email" name="email" type="email" placeholder="e.g. xyz@lnmiit.ac.in" required autocomplete="username"><label for="password">Password *</label><input id="password" name="password" type="password" required autocomplete="current-password"><div class="actions"><button>Sign in</button></div></form><p class="muted"></p></section>`;
   action($("#login"), async (d) => {
     let x = await api("/auth/login", "POST", d);
     S.token = x.token;
@@ -203,28 +203,28 @@ async function dashboard() {
   let cards =
     role === "Student/Alumni"
       ? [
-          [rows.length, "My records"],
-          [
-            rows.filter((x) => x.verification_status === "Submitted").length,
-            "Awaiting verification",
-          ],
-          [
-            rows.filter((x) => x.verification_status === "Correction Required")
-              .length,
-            "Corrections required",
-          ],
-        ]
+        [rows.length, "My records"],
+        [
+          rows.filter((x) => x.verification_status === "Submitted").length,
+          "Awaiting verification",
+        ],
+        [
+          rows.filter((x) => x.verification_status === "Correction Required")
+            .length,
+          "Corrections required",
+        ],
+      ]
       : [
-          [rows.length, "Total records"],
-          [
-            rows.filter((x) => x.verification_status === "Submitted").length,
-            "Verification queue",
-          ],
-          [
-            rows.filter((x) => x.progression_status === "Ongoing").length,
-            "Ongoing",
-          ],
-        ];
+        [rows.length, "Total records"],
+        [
+          rows.filter((x) => x.verification_status === "Submitted").length,
+          "Verification queue",
+        ],
+        [
+          rows.filter((x) => x.progression_status === "Ongoing").length,
+          "Ongoing",
+        ],
+      ];
   page(
     `${role} Dashboard`,
     "Current higher-studies information and work items.",
@@ -278,36 +278,35 @@ async function records() {
     staff
       ? "Search students and combine record filters."
       : "Your records and verification status.",
-    `${
-      staff
-        ? `<section class="card"><form id="filter"><div class="form-grid"><div><label>Student</label><input name="student" value="${esc(f.student || "")}"></div>${["institution", "programme", "country"].map((k) => `<div><label>${k}</label><select name="${k}_id">${opts(S.master[k === "country" ? "countries" : k + "s"], f[k + "_id"])}</select></div>`).join("")}${[
-            "admission_status",
-            "progression_status",
-            "verification_status",
-          ]
-            .map(
-              (k, i) =>
-                `<div><label>${k.replace("_", " ")}</label><select name="${k}"><option value="">All</option>${[
-                  [
-                    "Applied",
-                    "Offer Received",
-                    "Admitted",
-                    "Rejected",
-                    "Deferred",
-                  ],
-                  ["Not Started", "Ongoing", "Completed", "Discontinued"],
-                  ["Draft", "Submitted", "Verified", "Correction Required"],
-                ][i]
-                  .map(
-                    (v) =>
-                      `<option ${f[k] === v ? "selected" : ""}>${v}</option>`,
-                  )
-                  .join("")}</select></div>`,
-            )
-            .join(
-              "",
-            )}</div><div class="actions"><button>Apply filters</button><button type="button" class="secondary" id="clear">Clear</button></div></form></section>`
-        : `<div class="actions"><button onclick="show('add')">Add Higher-Study Record</button></div>`
+    `${staff
+      ? `<section class="card"><form id="filter"><div class="form-grid"><div><label>Student</label><input name="student" value="${esc(f.student || "")}"></div>${["institution", "programme", "country"].map((k) => `<div><label>${k}</label><select name="${k}_id">${opts(S.master[k === "country" ? "countries" : k + "s"], f[k + "_id"])}</select></div>`).join("")}${[
+        "admission_status",
+        "progression_status",
+        "verification_status",
+      ]
+        .map(
+          (k, i) =>
+            `<div><label>${k.replace("_", " ")}</label><select name="${k}"><option value="">All</option>${[
+              [
+                "Applied",
+                "Offer Received",
+                "Admitted",
+                "Rejected",
+                "Deferred",
+              ],
+              ["Not Started", "Ongoing", "Completed", "Discontinued"],
+              ["Draft", "Submitted", "Verified", "Correction Required"],
+            ][i]
+              .map(
+                (v) =>
+                  `<option ${f[k] === v ? "selected" : ""}>${v}</option>`,
+              )
+              .join("")}</select></div>`,
+        )
+        .join(
+          "",
+        )}</div><div class="actions"><button>Apply filters</button><button type="button" class="secondary" id="clear">Clear</button></div></form></section>`
+      : `<div class="actions"><button onclick="show('add')">Add Higher-Study Record</button></div>`
     }<section class="card">${recordTable(rows)}</section>`,
   );
   if (staff) {

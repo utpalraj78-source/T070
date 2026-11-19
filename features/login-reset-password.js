@@ -77,12 +77,12 @@
               <input id="resetCode" name="code" type="text" maxlength="6" placeholder="Enter 6-digit code" autocomplete="one-time-code">
             </div>
             <div>
-              <label for="resetNewPassword">New Password * (min 8 characters)</label>
-              <input id="resetNewPassword" name="newPassword" type="password" minlength="8" autocomplete="new-password">
+              <label for="resetNewPassword">New Password *</label>
+              <input id="resetNewPassword" name="newPassword" type="password" autocomplete="new-password">
             </div>
             <div>
               <label for="resetConfirmPassword">Confirm New Password *</label>
-              <input id="resetConfirmPassword" name="confirmPassword" type="password" minlength="8" autocomplete="new-password">
+              <input id="resetConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password">
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
     // Step 1: Request verification code
     sendCodeBtn.addEventListener('click', async () => {
       const email = form.email.value.trim().toLowerCase();
-      if (!email || (!email.endsWith('@lnmiit.ac.in') && !email.endsWith('@example.edu'))) {
+      if (!email || !email.endsWith('@lnmiit.ac.in')) {
         alert('Please enter a valid @lnmiit.ac.in institutional email address.');
         return;
       }

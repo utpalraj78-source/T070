@@ -20,10 +20,10 @@ class IntegrationTests(unittest.TestCase):
         self.thread=threading.Thread(target=self.http.serve_forever,daemon=True)
         self.thread.start()
         self.base=f'http://127.0.0.1:{self.http.server_port}'
-        self.student=self.login('aarav@example.edu','StudentDemo123!')
-        self.other=self.login('meera@example.edu','StudentDemo123!')
-        self.coord=self.login('coordinator@example.edu','CoordinatorDemo123!')
-        self.admin=self.login('admin@example.edu','AdminDemo123!')
+        self.student=self.login('24ucs144@lnmiit.ac.in','Laxita123!')
+        self.other=self.login('24ucs145@lnmiit.ac.in','Vaibhav12!')
+        self.coord=self.login('24ucs146@lnmiit.ac.in','Manan1234!')
+        self.admin=self.login('24ucs148@lnmiit.ac.in','Harsh1234!')
     def tearDown(self):
         self.http.shutdown();self.http.server_close();self.thread.join();self.app.db.conn.close();self.tmp.cleanup()
     def request(self,method,path,body=None,token=None):
@@ -45,11 +45,11 @@ class IntegrationTests(unittest.TestCase):
         status,body=self.request('GET','/profile',token=self.student)
         self.assertEqual(status,200);self.assertEqual(body['role'],'Student/Alumni')
     def test_IT_AUTH_002_failure_generic(self):
-        status,body=self.request('POST','/auth/login',{'email':'aarav@example.edu','password':'wrong'})
+        status,body=self.request('POST','/auth/login',{'email':'24ucs144@lnmiit.ac.in','password':'wrong'})
         self.assertEqual(status,401);self.assertEqual(body['error']['message'],'Invalid credentials.')
     def test_IT_AUTH_003_inactive(self):
         self.request('PATCH','/users/1',{'active':False},self.admin)
-        self.assertEqual(self.request('POST','/auth/login',{'email':'aarav@example.edu','password':'StudentDemo123!'})[0],401)
+        self.assertEqual(self.request('POST','/auth/login',{'email':'24ucs144@lnmiit.ac.in','password':'Laxita123!'})[0],401)
     def test_IT_AUTH_004_protected(self):self.assertEqual(self.request('GET','/records')[0],401)
     def test_IT_AUTH_005_logout(self):
         self.assertEqual(self.request('POST','/auth/logout',token=self.student)[0],204)

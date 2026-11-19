@@ -193,11 +193,15 @@ class Service:
     def create_user(self, user, data):
         require_role(user, ADMIN)
         name = required(data.get('name'), 'Name')
-        email = required(data.get('email'), 'Email').lower()
-        if '@' not in email: fail('VALIDATION_ERROR', 'Email must be valid.', 422)
+        email = required(data.get('email'), 'Email').lower().strip()
+        if not email.endswith('@lnmiit.ac.in'):
+            fail('VALIDATION_ERROR', 'Only @lnmiit.ac.in email addresses are permitted.', 422)
         role = choice(data.get('role'), ROLES, 'Role')
         password = required(data.get('password'), 'Password')
-        if len(password) < 8: fail('VALIDATION_ERROR', 'Password must have at least 8 characters.', 422)
+        # Password policy is enforced by the active feature files in features/
+        # (password-min-length-8.js, password-max-length-10.js, password-first-letter-capital.js,
+        #  password-require-number.js, password-require-special-char.js, etc.)
+        # Commenting/uncommenting those files in feature-router.js toggles each rule.
         try:
             with self.db.transaction():
                 cur = self.db.run('INSERT INTO users(name,email,contact_info,role,password_hash) VALUES(?,?,?,?,?)',
@@ -267,8 +271,8 @@ class Service:
         rate_key = f"{client_ip}:reset"
         if reset_rate_limiter.is_rate_limited(rate_key):
             fail('RATE_LIMIT_EXCEEDED', 'Too many password reset requests. Please wait 5 minutes.', 429)
-        email = required(email, 'Email').lower()
-        if not (email.endswith('@lnmiit.ac.in') or email.endswith('@example.edu')):
+        email = required(email, 'Email').lower().strip()
+        if not email.endswith('@lnmiit.ac.in'):
             fail('VALIDATION_ERROR', 'Only @lnmiit.ac.in email addresses are permitted for password reset.', 422)
         user = self.db.one('SELECT * FROM users WHERE LOWER(email)=? AND active=1', (email,))
         if not user:
@@ -290,12 +294,14 @@ class Service:
         rate_key = f"{client_ip}:reset"
         if reset_rate_limiter.is_rate_limited(rate_key):
             fail('RATE_LIMIT_EXCEEDED', 'Too many attempts. Please wait 5 minutes.', 429)
-        email = required(email, 'Email').lower()
-        if not (email.endswith('@lnmiit.ac.in') or email.endswith('@example.edu')):
+        email = required(email, 'Email').lower().strip()
+        if not email.endswith('@lnmiit.ac.in'):
             fail('VALIDATION_ERROR', 'Only @lnmiit.ac.in email addresses are permitted for password reset.', 422)
         password = required(password, 'Password')
-        if len(password) < 8:
-            fail('VALIDATION_ERROR', 'Password must have at least 8 characters.', 422)
+        # Password policy is enforced by the active feature files in features/
+        # (password-min-length-8.js, password-max-length-10.js, password-first-letter-capital.js,
+        #  password-require-number.js, password-require-special-char.js, etc.)
+        # Commenting/uncommenting those files in feature-router.js toggles each rule.
         user = self.db.one('SELECT * FROM users WHERE LOWER(email)=? AND active=1', (email,))
         if not user:
             reset_rate_limiter.record_failure(rate_key)

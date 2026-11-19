@@ -3,10 +3,10 @@ from .db import Repository
 from .security import hash_password
 
 ACCOUNTS = [
- ('Aarav Sharma','aarav@example.edu','Student/Alumni','StudentDemo123!'),
- ('Meera Iyer','meera@example.edu','Student/Alumni','StudentDemo123!'),
- ('Dr. Kavita Rao','coordinator@example.edu','Higher Studies Coordinator','CoordinatorDemo123!'),
- ('System Admin','admin@example.edu','Administrator','AdminDemo123!'),
+ ('Laxita Bhimsaria','24ucs144@lnmiit.ac.in','Student/Alumni','Laxita123!'),
+ ('Vaibhav Goyal','24ucs145@lnmiit.ac.in','Student/Alumni','Vaibhav12!'),
+ ('Manan Jain','24ucs146@lnmiit.ac.in','Higher Studies Coordinator','Manan1234!'),
+ ('Harsh Varshney','24ucs148@lnmiit.ac.in','Administrator','Harsh1234!'),
 ]
 
 def seed(path='data/hsts.sqlite3'):

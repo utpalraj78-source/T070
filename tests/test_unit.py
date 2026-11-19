@@ -53,11 +53,22 @@ class ServiceUnitTests(unittest.TestCase):
         with self.assertRaises(AppError) as e: fn()
         self.assertEqual(e.exception.code,code)
     def payload(self): return {'institution_id':1,'programme_id':1,'country_id':2,'admission_status':'Applied'}
-    def test_UT_AUTH_002_valid_login(self): self.assertEqual(authenticate(self.db,'aarav@example.edu','StudentDemo123!')[1]['id'],1)
-    def test_UT_AUTH_003_invalid_generic(self): self.assert_code('AUTHENTICATION_ERROR',lambda:authenticate(self.db,'aarav@example.edu','wrong'))
+    def test_UT_AUTH_002_valid_login(self): self.assertEqual(authenticate(self.db,'24ucs144@lnmiit.ac.in','Laxita123!')[1]['id'],1)
+    def test_UT_AUTH_003_invalid_generic(self): self.assert_code('AUTHENTICATION_ERROR',lambda:authenticate(self.db,'24ucs144@lnmiit.ac.in','wrong'))
     def test_UT_AUTH_004_inactive(self):
         self.db.run('UPDATE users SET active=0 WHERE id=1')
-        self.assert_code('AUTHENTICATION_ERROR',lambda:authenticate(self.db,'aarav@example.edu','StudentDemo123!'))
+        self.assert_code('AUTHENTICATION_ERROR',lambda:authenticate(self.db,'24ucs144@lnmiit.ac.in','Laxita123!'))
+    def test_UT_AUTH_005_domain_restriction(self):
+        self.assert_code('AUTHENTICATION_ERROR',lambda:authenticate(self.db,'outsider@gmail.com','Laxita123!'))
+    # Password policy rules are enforced ONLY by feature files in features/feature-router.js.
+    # Commenting/uncommenting a file there toggles the rule - backend accepts any non-empty password.
+    def test_UT_USER_003_password_accepted_any_non_empty(self):
+        # Backend does not enforce password complexity - feature router controls each rule.
+        result=self.s.create_user(self.admin,{'name':'Test User','email':'testuser@lnmiit.ac.in','role':'Student/Alumni','password':'anypass'})
+        self.assertEqual(result['email'],'testuser@lnmiit.ac.in')
+    def test_UT_USER_004_password_empty_rejected(self):
+        # Only rule the backend keeps: password must not be blank.
+        self.assert_code('VALIDATION_ERROR',lambda:self.s.create_user(self.admin,{'name':'Test User','email':'testuser2@lnmiit.ac.in','role':'Student/Alumni','password':' '}))
     def test_UT_REC_001_create_draft(self): self.assertEqual(self.s.create_record(self.student,self.payload())['verification_status'],'Draft')
     def test_UT_REC_002_missing_reference(self): self.assert_code('VALIDATION_ERROR',lambda:self.s.create_record(self.student,{**self.payload(),'institution_id':None}))
     def test_UT_REC_003_wrong_programme_institution(self): self.assert_code('VALIDATION_ERROR',lambda:self.s.create_record(self.student,{**self.payload(),'programme_id':3}))

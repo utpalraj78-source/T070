@@ -28,6 +28,15 @@ This directory contains standalone, modular features for the **Higher Studies Tr
 | **4.14 Text Limit** | `text-limit-search-student.js` | Max 50 characters on Student Search filter input (remaining / max). |
 | **4.15 Text Limit** | `text-limit-reset-code.js` | Max 6 characters on Password Reset Verification Code (remaining / max). |
 | **5. Email Domain Check** | `email-domain-validator-lnmiit.js` | Enforces that email addresses must strictly belong to `@lnmiit.ac.in`. |
+| **6. Password First Capital** | `password-first-letter-capital.js` | Enforces that the first character of any password must be an uppercase capital letter (A-Z). |
+| **7. Password Max 10 Chars** | `password-max-10-characters.js` | Enforces a maximum limit of 10 characters on password fields with live counter. |
+| **7b. Password Max 10 Words** | `password-max-10-words.js` | Enforces a maximum limit of 10 words on password fields with word counter. |
+| **8. Password Min 8 Chars** | `password-min-length-8.js` | Enforces minimum length of 8 characters with live status badge. |
+| **9. Password Number Check** | `password-require-number.js` | Requires at least 1 numeric digit (0-9) with live status badge. |
+| **10. Password Special Char** | `password-require-special-char.js` | Requires at least 1 special character (!@#$%^&*...) with live status badge. |
+| **11a. Password Starts Number** | `password-start-with-number.js` | Enforces that the first character must be a numeric digit (0-9). |
+| **11b. Password Starts Special** | `password-start-with-special-char.js` | Enforces that the first character must be a special character (!@#$...). |
+| **11c. Password Starts Num/Spec** | `password-start-with-number-or-special.js` | Enforces that the first character must be a number or special character. |
 
 ---
 

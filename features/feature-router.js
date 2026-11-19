@@ -21,37 +21,60 @@
   // Add or remove filenames here to toggle features in the main project.
   // --------------------------------------------------------------------------
   const ACTIVE_FEATURE_ROUTES = [
-   // 1. Password Visibility Toggle (Show / Hide password icon)
-    'password-show-hide-toggle.js',
+    // 1. Password Visibility Toggle (Show / Hide password icon)
+    // 'password-show-hide-toggle.js',
 
     // 2. Dark / Light Theme Switcher
-    'theme-toggle-dark-light.js',
+    // 'theme-toggle-dark-light.js',
 
-   // 3. Reset Password on Login Page
-    'login-reset-password.js',
+    // 3. Reset Password on Login Page
+    // 'login-reset-password.js',
 
-   // // 4. Character limits for individual text fields (separate file per field)
-    'text-limit-user-name.js',
-    'text-limit-user-email.js',
-    'text-limit-user-password.js',
-    'text-limit-contact-info.js',
-    'text-limit-admission-evidence.js',
-    'text-limit-correction-reason.js',
-    'text-limit-progression-remarks.js',
-    'text-limit-admission-remarks.js',
-    'text-limit-master-name.js',
-    'text-limit-master-city.js',
-    'text-limit-master-code.js',
-    'text-limit-master-degree-type.js',
-    'text-limit-master-duration.js',
-    'text-limit-search-student.js',
-    'text-limit-reset-code.js',
+    // // 4. Character limits for individual text fields (separate file per field)
+    // 'text-limit-user-name.js',
+    // 'text-limit-user-email.js',
+    // 'text-limit-user-password.js',
+    // 'text-limit-contact-info.js',
+    // 'text-limit-admission-evidence.js',
+    // 'text-limit-correction-reason.js',
+    // 'text-limit-progression-remarks.js',
+    // 'text-limit-admission-remarks.js',
+    // 'text-limit-master-name.js',
+    // 'text-limit-master-city.js',
+    // 'text-limit-master-code.js',
+    // 'text-limit-master-degree-type.js',
+    // 'text-limit-master-duration.js',
+    // 'text-limit-search-student.js',
+    // 'text-limit-reset-code.js',
 
     // Restriction: Only alphabetic characters (A-Z, a-z) allowed in student fields
-    'student-field-alphabets-only.js',
+    // 'student-field-alphabets-only.js',
 
-    //// 5. LNMIIT Email Domain Validator (@lnmiit.ac.in)
-    //'email-domain-validator-lnmiit.js'
+    // 5. LNMIIT Email Domain Validator (@lnmiit.ac.in)
+    // 'email-domain-validator-lnmiit.js',
+
+    // 6. Password First Letter Capital Requirement
+    // 'password-first-letter-capital.js',
+
+    // 7. Password Maximum 10 Characters Limit
+    // 'password-max-10-characters.js',
+
+    // 7b. Password Maximum 10 Words Limit
+    // 'password-max-10-words.js',
+
+    // 8. Password Minimum 8 Characters Requirement
+    // 'password-min-length-8.js',
+
+    // 9. Password Must Contain at least 1 Number (0-9)
+    // 'password-require-number.js',
+
+    // 10. Password Must Contain at least 1 Special Character
+    // 'password-require-special-char.js',
+
+    // 11. Optional Starting-Character Rules (Uncomment to activate):
+    // 'password-start-with-number.js',              // First char must be a number (0-9)
+    // 'password-start-with-special-char.js',        // First char must be a special char
+    // 'password-start-with-number-or-special.js'     // First char must be a number OR special char
   ];
 
   // --------------------------------------------------------------------------

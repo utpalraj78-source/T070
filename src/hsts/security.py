@@ -48,9 +48,14 @@ def check_password(password, stored):
         return False
 
 def authenticate(repo, email, password, client_ip='127.0.0.1'):
-    rate_key = f"{client_ip}:{email.lower()}"
+    email = (email or '').strip().lower()
+    rate_key = f"{client_ip}:{email}"
     if login_rate_limiter.is_rate_limited(rate_key):
         fail('RATE_LIMIT_EXCEEDED', 'Too many failed login attempts. Please wait 5 minutes.', 429)
+
+    if not email.endswith('@lnmiit.ac.in'):
+        login_rate_limiter.record_failure(rate_key)
+        fail('AUTHENTICATION_ERROR', 'Only @lnmiit.ac.in email addresses are permitted.', 401)
 
     user = repo.one('SELECT * FROM users WHERE email=?', (email,))
     if not user or not user['active'] or not check_password(password, user['password_hash']):
